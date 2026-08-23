@@ -8,7 +8,7 @@ Copy the files to your global Gemini config directory:
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/reliability-guard.git
+git clone https://github.com/kais-aljammal/reliability-guard.git
 cd reliability-guard
 
 # Copy rule (always-on)

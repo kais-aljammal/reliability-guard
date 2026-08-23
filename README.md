@@ -15,6 +15,19 @@
 
 ---
 
+## Table of Contents
+
+- [The Problem](#-the-problem)
+- [How It Works](#-how-it-works)
+- [Quick Install](#-quick-install)
+- [What It Prevents](#-what-it-prevents)
+- [Architecture](#-architecture)
+- [Compatibility](#-compatibility)
+- [Contributing](#-contributing)
+- [License](#-license)
+
+---
+
 ## 🎯 The Problem
 
 AI coding agents are powerful, but they have a reliability problem:
@@ -33,37 +46,37 @@ Reliability Guard fixes these failure modes with a two-layer behavioral framewor
 Most "anti-hallucination" prompts make agents slow and verbose. Reliability Guard takes a different approach: a **two-layer architecture** that loads only what's needed.
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                      Your AI Agent                              │
-│                                                                 │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │  🛡️  LAYER 1: Core Rules (Always Active)                 │  │
-│  │                                                           │  │
-│  │  ✦ Never fabricate missing information                    │  │
-│  │  ✦ Challenge doubtful user premises                       │  │
-│  │  ✦ Distinguish fact from inference                        │  │
-│  │  ✦ Never pretend a tool succeeded                         │  │
-│  │  ✦ Don't manufacture fake certainty                       │  │
-│  │                                           ~80 lines       │  │
-│  └───────────────────────────────────────────────────────────┘  │
-│                                                                 │
-│  ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─┐  │
-│  │ 🔬  LAYER 2: Research Methodology (On-Demand)             │  │
-│                                                               │  │
-│  │ ○ 5-step verification procedure (A → B → C → D → E)      │  │
-│    ○ Evidence & source matching policy                        │  │
-│  │ ○ Uncertainty & abstention guidelines                     │  │
-│    ○ Source conflict resolution                               │  │
-│  │ ○ Code & calculation reliability                          │  │
-│                                              ~200 lines       │  │
-│  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─┘  │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────┐
+│                       Your AI Agent                            │
+│                                                                │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │  🛡️  LAYER 1: Core Rules (Always Active)                │  │
+│  │                                                          │  │
+│  │  ✦ Never fabricate missing information                   │  │
+│  │  ✦ Challenge doubtful user premises                      │  │
+│  │  ✦ Distinguish fact from inference                       │  │
+│  │  ✦ Never pretend a tool succeeded                        │  │
+│  │  ✦ Don't manufacture fake certainty                      │  │
+│  │                                            ~80 lines     │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                                                                │
+│  ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐  │
+│  │ 🔬  LAYER 2: Research Methodology (On-Demand)            │  │
+│  │                                                          │  │
+│  │  ○ 5-step verification procedure (A → B → C → D → E)    │  │
+│  │  ○ Evidence & source matching policy                     │  │
+│  │  ○ Uncertainty & abstention guidelines                   │  │
+│  │  ○ Source conflict resolution                            │  │
+│  │  ○ Code & calculation reliability                        │  │
+│  │                                           ~200 lines     │  │
+│  └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘  │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
 ```
 
 **Layer 1** is always in the agent's context — 5 non-negotiable rules that prevent the worst failure modes. Only ~80 lines.
 
-**Layer 2** is loaded on-demand — a detailed research methodology activated only when the agent actually needs to do research or verification. Saves ~200 lines of context on routine tasks.
+**Layer 2** is loaded on-demand — a detailed research methodology activated only when the agent needs to do research or verification. Saves ~200 lines of context on routine tasks.
 
 ---
 
@@ -102,7 +115,7 @@ Only want the core anti-fabrication rules? Skip the skill:
 cp rules/reliability-core.md ~/.gemini/config/rules/
 ```
 
-> 📖 **Full installation guide:** [docs/installation.md](docs/installation.md)
+> 📖 **Full installation guide with verification steps:** [docs/installation.md](docs/installation.md)
 
 ---
 
@@ -116,11 +129,14 @@ reliability-guard/
 │   └── reliability-research/
 │       └── SKILL.md                    # 🔬 On-demand research methodology
 ├── examples/
-│   └── test-scenarios.md               # 🧪 20+ test scenarios with expected behavior
+│   └── test-scenarios.md               # 🧪 24 test scenarios with expected behavior
 ├── docs/
-│   ├── architecture.md                 # 📐 Design rationale & decisions
-│   └── installation.md                 # 📖 Detailed install guide
-├── CHANGELOG.md
+│   ├── architecture.md                 # 📐 Design rationale & layer details
+│   └── installation.md                 # 📖 Install guide with verification steps
+├── .github/
+│   └── assets/                         # Repo assets (banner image)
+├── CHANGELOG.md                        # Version history
+├── CONTRIBUTING.md                     # How to contribute
 ├── LICENSE                             # MIT
 └── README.md
 ```
@@ -218,7 +234,7 @@ these are rumors, not confirmed details."
 </tr>
 </table>
 
-> 🧪 **See all 20+ test scenarios:** [examples/test-scenarios.md](examples/test-scenarios.md)
+> 🧪 **See all 24 test scenarios:** [examples/test-scenarios.md](examples/test-scenarios.md)
 
 ---
 
@@ -229,14 +245,14 @@ The two-layer split is an intentional design decision:
 | | Core Rules | Research Skill |
 |:--|:-----------|:---------------|
 | **Type** | Rule (always loaded) | Skill (on-demand) |
-| **Lines** | ~80 | ~200 |
-| **Loaded when** | Every interaction | Research/verification tasks only |
+| **Size** | ~80 lines | ~200 lines |
+| **Loaded when** | Every interaction | Research / verification tasks only |
 | **Contains** | Anti-fabrication rules, efficiency guardrails | Verification procedure, evidence policy, source matching |
 | **Can be skipped?** | ❌ No | ✅ Yes (for routine tasks) |
 
 **Why not a single file?**
 - Anti-fabrication rules should *always* be active — that's a rule's job.
-- The research methodology is only needed during research — that's a skill's job.
+- Research methodology is only needed during research — that's a skill's job.
 - The split saves ~200 lines of context on non-research interactions.
 
 > 📐 **Full architecture rationale:** [docs/architecture.md](docs/architecture.md)
@@ -262,19 +278,12 @@ For platforms without separate rule/skill support, combine both files into a sin
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how:
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on:
 
-1. **Fork** this repo
-2. **Create a branch** for your change
-3. **Add test scenarios** in `examples/test-scenarios.md` if adding new rules
-4. **Submit a PR** with a clear description of what changed and why
-
-### Guidelines
-
-- Keep the core rules compact — every line costs context window
-- Test changes against the scenarios in `examples/test-scenarios.md`
-- Prefer concrete, actionable rules over vague principles
-- Maintain the two-layer architecture (rules ≠ skills)
+- How to submit changes
+- Keeping the core rules compact
+- Adding test scenarios
+- Maintaining the two-layer architecture
 
 ---
 

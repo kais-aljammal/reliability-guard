@@ -1,23 +1,27 @@
 # Architecture
 
-## Why a Two-Layer Design?
+## Design Philosophy
 
-The reliability-guard system uses a **rule + skill** split architecture. This is
-an intentional design decision, not arbitrary modularization.
+Reliability Guard uses a **rule + skill** split architecture. This is an
+intentional design decision optimized for how modern AI agent systems load
+instructions.
 
-### The Problem with a Single File
+---
 
-The original v1.0 was a single 339-line SKILL.md file. This created two issues:
+## Why Two Layers?
 
-1. **Wrong loading behavior.** Skills are loaded on-demand — the agent decides
-   whether to activate them. But anti-fabrication rules should be *always
-   active*. A skill can be skipped; a rule cannot.
+AI agent platforms distinguish between two types of instructions:
 
-2. **Context waste.** Loading 339 lines of detailed research methodology on
-   every interaction — including routine coding, creative writing, and simple
-   questions — consumes context window for no benefit.
+- **Rules** — loaded into the agent's context on every interaction. They
+  cannot be skipped. Best for behavioral constraints that must always apply.
+- **Skills** — loaded on-demand when the agent determines they are relevant.
+  Best for detailed methodologies that only apply to certain tasks.
 
-### The Solution
+Anti-fabrication rules must **always** be active — you never want an agent that
+fabricates in some conversations but not others. That makes them rules. Research
+methodology, however, is only relevant during research, verification, or
+fact-checking tasks. Loading it during routine coding or creative writing wastes
+context window for no benefit. That makes it a skill.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -33,7 +37,7 @@ The original v1.0 was a single 339-line SKILL.md file. This created two issues:
 │  └─────────────────────────────────────────────────────┘    │
 │                                                             │
 │  ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐   │
-│    reliability-research/SKILL.md (Skill)  ~200 lines        │
+│    reliability-research/SKILL.md (Skill) ~200 lines         │
 │  │ ○ Loaded on-demand                                  │   │
 │    ○ Research methodology                                   │
 │  │ ○ Evidence policy, source matching                  │   │
@@ -43,26 +47,32 @@ The original v1.0 was a single 339-line SKILL.md file. This created two issues:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### Layer Details
+---
 
-| Layer | File | Type | Loaded | Purpose | Lines |
-|:------|:-----|:-----|:-------|:--------|:------|
-| **Core** | `rules/reliability-core.md` | Rule | Always | Behavioral constraints that prevent fabrication, false certainty, and unsupported claims | ~80 |
-| **Research** | `skills/reliability-research/SKILL.md` | Skill | On-demand | Detailed methodology for research, verification, evidence evaluation, and conflict resolution | ~200 |
+## Layer Details
 
-### What Goes Where?
+| Layer | File | Type | Loaded | Purpose | Size |
+|:------|:-----|:-----|:-------|:--------|:-----|
+| **Core** | `rules/reliability-core.md` | Rule | Always | Behavioral constraints that prevent fabrication, false certainty, and unsupported claims | ~80 lines |
+| **Research** | `skills/reliability-research/SKILL.md` | Skill | On-demand | Methodology for research, verification, evidence evaluation, and conflict resolution | ~200 lines |
+
+---
+
+## What Goes Where?
 
 **Core Rule (always-on):**
+
 - Never fabricate information
 - Challenge doubtful user premises
 - Distinguish fact from inference
 - Never pretend a tool succeeded
 - Don't manufacture certainty
 - Efficiency guardrails
-- Host system integration notes
+- Host system integration
 
 **Research Skill (on-demand):**
-- Step-by-step verification procedure
+
+- Step-by-step verification procedure (A → B → C → D → E)
 - Evidence and source matching policy
 - Uncertainty and abstention guidelines
 - Recommendation methodology
@@ -71,7 +81,9 @@ The original v1.0 was a single 339-line SKILL.md file. This created two issues:
 - Source conflict resolution
 - Output behavior guidelines
 
-### Design Principles
+---
+
+## Design Principles
 
 1. **Separation of concerns.** Rules define *what* the agent must never do.
    Skills define *how* to do research well.
