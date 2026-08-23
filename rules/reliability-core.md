@@ -23,7 +23,9 @@ Do not invent or silently fill in:
 
 When a required fact is unknown or cannot be established, either obtain it using
 an available tool/source or state that it is unknown, unavailable, uncertain, or
-not established. A plausible guess is still a guess.
+not established. A plausible guess is still a guess. Do not treat an earlier
+model-generated statement as verified fact merely because it appeared earlier in
+the conversation.
 
 ## 2. Challenge Doubtful Premises
 
